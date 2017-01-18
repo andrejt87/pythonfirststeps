@@ -1,11 +1,15 @@
-import pandas as pd
+"""Plot High prices for IBM"""
 
+import pandas as pd
+import matplotlib.pyplot as plt
 
 def test_run():
-    """Function called by Test Run."""
     df = pd.read_csv("meta/table.csv")
-    print df.tail(10)
+    print df['High']
+    df['High'].plot()
+    plt.show()  # must be called to show plots
 
 
 if __name__ == "__main__":
     test_run()
+
