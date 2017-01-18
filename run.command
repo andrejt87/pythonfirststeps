@@ -1,0 +1,1 @@
+cd '/Users/andrejtupikin/pythonfirststeps/' && '/usr/bin/pythonw'  '/Users/andrejtupikin/pythonfirststeps/helloworld.py'  && echo Exit status: $? && exit 1
