@@ -1,12 +1,19 @@
 import time, threading
-i = 0
+import numpy as np 
+import matplotlib.pyplot as plt
+import json
+
+i = 1
+tm = []
+ 
 def test_run(i):
+    global tm
     i = i + 1
     print(time.ctime())
     from googlefinance import getQuotes
-    import json
     stock = getQuotes('AAPL')
-    print float(stock[0]['LastTradePrice'])
+    tm.append(float(stock[0]['LastTradePrice']))
+    print tm
     threading.Timer(3, test_run(i)).start()
 
 
