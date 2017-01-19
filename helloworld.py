@@ -1,23 +1,30 @@
 import time, threading
-import numpy as np 
+import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import json
 
 i = 1
-tm = []
+price = []
+clock = []
+
  
 def test_run(i):
-    global tm
     i = i + 1
     print(time.ctime())
     from googlefinance import getQuotes
     stock = getQuotes('AAPL')
-    tm.append(float(stock[0]['LastTradePrice']))
-    print tm
+    price.append(float(stock[0]['LastTradePrice']))
+    clock.append(time.ctime())
+    submission = pd.DataFrame({'Price': price, 'Time': clock})
+    submission.to_csv('AAPL.csv', index=False)
+    plt.ion()
+    plt.plot(price)
+    plt.pause(1)
+    print price
     threading.Timer(3, test_run(i)).start()
-
+    
 
 if __name__ == "__main__":
-    
     test_run(i)
 
