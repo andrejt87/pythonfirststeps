@@ -30,7 +30,7 @@ def fetch_data(symbol):
     
         # write to csv
         csv_df = pd.DataFrame({'Price': price, 'Time': dates})
-        csv_df.to_csv('AAPL.csv', index=False)
+        csv_df.to_csv(str(symbol) + '.csv', index=False)
     
         # plot data
         plotting(dates,price,symbol)
@@ -50,14 +50,13 @@ def plotting(x_val,y_val,symbol):
     #axes_1.set_title(str(y_val[-1]))
     axes_1.set_title(symbol)
     axes_1.plot(x_val, y_val)
+    plt.annotate(str(symbol) + ":" + str(price[-1]), xy=(0.05, 0.95), xycoords='axes fraction')
     plt.pause(2)
     
 
 if __name__ == "__main__":
     figure_1 = plt.figure()
     axes_1 = figure_1.add_subplot(111)
-    fetch_data(sys.argv)
-    
     while True:
-        fetch_data(sys.argv)
+        fetch_data(sys.argv[1:])
 
