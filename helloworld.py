@@ -12,9 +12,8 @@ clock = []
 dates = []
 
  
-def test_run(symbol):
+def fetch_data(symbol):
     
-    while True:
         # print time
         print(time.ctime())
     
@@ -57,5 +56,8 @@ def plotting(x_val,y_val,symbol):
 if __name__ == "__main__":
     figure_1 = plt.figure()
     axes_1 = figure_1.add_subplot(111)
-    test_run(sys.argv)
+    fetch_data(sys.argv)
+    
+    while True:
+        fetch_data(sys.argv)
 
