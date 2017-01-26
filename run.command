@@ -1,1 +1,1 @@
-/usr/bin/pythonw  /Users/andrejtupikin/pythonfirststeps/helloworld.py AAPL
+/usr/bin/pythonw  /Users/andrejtupikin/pythonfirststeps/helloworld.py AAPL BMW NDAQ
