@@ -4,11 +4,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib as mt
 import json
+import os
 from googlefinance import getQuotes
 from datetime import datetime
-
-clock = []
-dates = []
+from time import gmtime, strftime
 
  
 def fetch_data(symbol):
@@ -18,8 +17,12 @@ def fetch_data(symbol):
     price = []
     for x in range(0, len(stock)):
         price.append(float(stock[x]['LastTradePrice']))
-
-    Matrix = np.hstack((Matrix, np.atleast_2d(price).T))    
+    
+    if (Matrix == []):
+        Matrix = np.atleast_2d(price).T
+    else:
+        Matrix = np.hstack((Matrix, np.atleast_2d(price).T))
+        
     print Matrix
     #Matrix = np.append([float(stock[x-1]['LastTradePrice'])],[float(stock[x]['LastTradePrice'])])
     # increase indices
@@ -29,42 +32,38 @@ def fetch_data(symbol):
     mt.dates.date2num(dates)
     
     # write to csv
-    #csv_df = pd.DataFrame({'Price': price, 'Time': dates})
-    #csv_df.to_csv("/Users/andrejtupikin/pythonfirststeps/" + str(symbol) + '.csv', index=False)
+    if not os.path.exists("/Users/andrejtupikin/pythonfirststeps/Data/" + strftime("%d %b %Y", gmtime()) + "/"):
+        os.makedirs("/Users/andrejtupikin/pythonfirststeps/Data/" + strftime("%d %b %Y", gmtime()) + "/")
     
+    for x in range(0, len(sys.argv)-1):
+        csv_df = pd.DataFrame({'Price': Matrix[x], 'Time': dates})
+        csv_df.to_csv("/Users/andrejtupikin/pythonfirststeps/Data/" + strftime("%d %b %Y", gmtime()) + "/" + str(sys.argv[x+1]) + '.csv', index=False)
     
 def plotting():
 
     # plot data
-    plt.ion()
-    #plt.plot(dates,price,'r') # plotting t,a separately 
-    #plt.plot(dates,Matrix[1],'b') # plotting t,b separately 
+    plt.cla()
+    for x in range(0, len(sys.argv)-1):
+        
+        plt.plot(dates,Matrix[x]) # plotting t,b separately 
+    
     print(time.ctime())
     plt.pause(2)
     
     
 def processing():
        fetch_data(sys.argv[1:]) 
-       
-def create_figure():
-    global figure_1
-    global axes_1
-    
-    #figure_1 = plt.figure()
-    #axes_1 = figure_1.add_subplot(111)
+      
 
 def init():
-    global figure_1, axes_1, price, clock, dates, symbol, x, Matrix,Temp_array
-    price = []
+    global figure_1, axes_1, price, clock, dates, x, Matrix
+    
     clock = []
     dates = []
-    
-    Temp_array = np.zeros((len(sys.argv)-1, 1))
-    Matrix = np.zeros((len(sys.argv)-1, 1))
+    Matrix = []
 
 if __name__ == "__main__":
     init()
-    create_figure()
     while True:
         processing()
         plotting()

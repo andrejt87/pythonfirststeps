@@ -1,1 +1,1 @@
-/usr/bin/pythonw  /Users/andrejtupikin/pythonfirststeps/helloworld.py AAPL BMW NDAQ
+/usr/bin/pythonw  /Users/andrejtupikin/pythonfirststeps/helloworld.py AAPL ETR:BMW ETR:VOW 
